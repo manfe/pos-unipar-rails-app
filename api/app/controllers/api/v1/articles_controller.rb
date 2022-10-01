@@ -1,4 +1,4 @@
-class ArticlesController < ApplicationController
+class Api::V1::ArticlesController < ApplicationController
   before_action :set_article, only: %i[ show update destroy ]
 
   # GET /articles
@@ -38,6 +38,20 @@ class ArticlesController < ApplicationController
     @article.destroy
   end
 
+  # GET /articles/published
+  def published
+    @articles = Article.published
+
+    render json: @articles, include: [:category, :author]
+  end
+
+  # GET /articles/published
+  def not_published
+    @articles = Article.not_published
+
+    render json: @articles, include: [:category, :author]
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_article
@@ -46,6 +60,6 @@ class ArticlesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def article_params
-      params.require(:article).permit(:title, :body, :category_id, :author_id)
+      params.require(:article).permit(:title, :body, :published_at, :category_id, :author_id)
     end
 end
