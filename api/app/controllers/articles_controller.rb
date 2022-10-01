@@ -5,12 +5,12 @@ class ArticlesController < ApplicationController
   def index
     @articles = Article.all
 
-    render json: @articles
+    render json: @articles, include: [:category]
   end
 
   # GET /articles/1
   def show
-    render json: @article
+    render json: @article, include: [:category]
   end
 
   # POST /articles
@@ -27,7 +27,7 @@ class ArticlesController < ApplicationController
   # PATCH/PUT /articles/1
   def update
     if @article.update(article_params)
-      render json: @article
+      render json: @article, include: [:category]
     else
       render json: @article.errors, status: :unprocessable_entity
     end
