@@ -3,7 +3,6 @@ class Api::V1::ArticlesController < ApplicationController
 
   # GET /articles
   def index
-    sleep 2
     @articles = Article.all
 
     render json: @articles, include: [:category, :author]
