@@ -1,9 +1,19 @@
 ## RODAR O SERVIDOR
 
+Node Version: `v16.17.1`
+
+Abilitar o Yarn utilizando o comando: `corepack enable`
+
+
+Instalar as dependências: 
 
 ```bash
-npm run dev
-# or
+yarn install
+```
+
+Rodar servidor de desenvolvimento:
+
+```bash
 yarn dev
 ```
 
