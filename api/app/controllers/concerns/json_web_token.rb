@@ -11,7 +11,8 @@ module JsonWebToken
   end
 
   def jwt_decode(token)
-    # TODO: verificar exception quando nenhum bearer token é passado. <JWT::DecodeError: Nil JSON web token>
+    return unless token
+
     decoded = JWT.decode(token, SECRET_KEY)
     HashWithIndifferentAccess.new decoded[0] if decoded
   end
