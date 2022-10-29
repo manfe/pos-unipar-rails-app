@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  
-  
   namespace :api do
     namespace :v1 do
       # Auth
@@ -30,5 +28,5 @@ Rails.application.routes.draw do
       get "/articles/not_published", to: "articles#not_published"
       resources :articles
     end
-  end  
+  end
 end

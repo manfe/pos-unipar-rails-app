@@ -3,18 +3,22 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import ROUTES from "../../../src/config/routes";
 import ArticleService from "../../../src/services/ArticleService";
+import useSWR from 'swr'
+import useAuth from "../../../src/hooks/useAuth";
+
 
 function ShowArticle() {
   const router = useRouter()
   const { id } = router.query
+  const user = useAuth()
+
+  const { data, error } = useSWR(user.isAuthenticated ? {url: `articles/${id}`, id: id} : null, ArticleService.getById)
 
   const [article, setArticle] = useState(null);
 
   useEffect(() => {
-    ArticleService.getById(id).then((data) => {
-      setArticle(data)
-    })
-  }, [id])
+    setArticle(data)
+  }, [data, error]);
 
   if (!article) return `Carregando...`
 

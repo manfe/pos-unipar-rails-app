@@ -5,7 +5,7 @@ const ArticleService = {
     let response = await axiosInstance.get('/articles')
     return response.data
   },
-  getById: async (id) => {
+  getById: async ({url, id}) => {
     if (!id) return
 
     let response = await axiosInstance.get(`/articles/${id}`)

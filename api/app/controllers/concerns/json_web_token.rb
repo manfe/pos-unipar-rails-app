@@ -11,8 +11,6 @@ module JsonWebToken
   end
 
   def jwt_decode(token)
-    return unless token
-
     decoded = JWT.decode(token, SECRET_KEY)
     HashWithIndifferentAccess.new decoded[0] if decoded
   end
