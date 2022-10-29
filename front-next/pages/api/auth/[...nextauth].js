@@ -24,7 +24,7 @@ export const authOptions = {
         const {csrfToken, username, password } = credentials
 
         // TODO: DEIXAR COMO ENV VAR
-        const SECRET_KEY = '89ba8dbb0f1b7d9e60e2dad6d1803a363d6b81024cd7b58da30b1344c18122be9e00c001585c7cd808854b97f5d2b21ce5c99914c1e1558763d15bd47141a6e8'
+        const SECRET_KEY = '<your rails app secret>'
 
         let response = await AuthService.signIn(username, password)
           
@@ -37,8 +37,8 @@ export const authOptions = {
       }
     }),
     GithubProvider({
-      clientId: 'bbd48bd456869d2fa27f',
-      clientSecret: '1dd1cefa0f0c332b0ed955114569e57dcb9c1895',
+      clientId: '<your client id>',
+      clientSecret: '<your client secret>',
       async authorize(credentials, req) {
         console.log(credentials, req)
       }
