@@ -17,11 +17,19 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import ROUTES from "../../src/config/routes";
 import ArticleService from "../../src/services/ArticleService";
 import { Container } from "@mui/system";
+import { useSession, signIn, signOut } from "next-auth/react"
+
+import useSWR from 'swr'
+import useAuth from "../../src/hooks/useAuth";
+import axiosInstance from "../../src/utils/axios";
 
 function ArticleList() {
   const { router } = useRouter();
   const [articles, setArticles] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const user = useAuth()
+  
+  const { data, error } = useSWR(user.isAuthenticated ? 'articles' : null, ArticleService.getAll)
 
   const deleteArticle = (article) => {
     var accepted = confirm(`Você realmente gostaria de deletar o artigo: ${article.title}`);
@@ -42,26 +50,30 @@ function ArticleList() {
   };
 
   const getArticles = async () => {
-    let data = await ArticleService.getAll();
     console.log(data);
-    setArticles(data);
+    
   };
 
   useEffect(() => {
-    getArticles().then(() => {
-      setIsLoading(false);
-    });
-  }, []);
+    if (data === undefined) return
+
+    setArticles(data);
+    setIsLoading(false);
+  }, [data, error]);
+
+  useEffect(() => {
+    console.log("user", user)
+  }, [user])
 
   if (isLoading) return <p>Carregando....</p>;
 
   return (
-    <Container fluid>
+    <Container>
       <Grid container mt={2}>
-        <Grid xs={6}>
+        <Grid item xs={6}>
             <Typography variant="h4">Articles List</Typography>
         </Grid>
-        <Grid xs={6}>
+        <Grid item xs={6}>
           <p>
             <Link
               href={{
@@ -74,7 +86,7 @@ function ArticleList() {
             </Link>
           </p>
         </Grid>
-        <Grid xs={12}>
+        <Grid item xs={12}>
           <table>
             <thead>
               <tr>
