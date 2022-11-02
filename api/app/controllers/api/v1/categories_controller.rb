@@ -3,7 +3,7 @@ class Api::V1::CategoriesController < ApplicationController
 
   # GET /categories
   def index
-    @categories = Category.all
+    @categories = Category.order(:id).page(params[:page]).per(params[:per_page])
 
     render json: @categories, include: [:articles]
   end

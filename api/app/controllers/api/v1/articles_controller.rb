@@ -3,7 +3,7 @@ class Api::V1::ArticlesController < ApplicationController
 
   # GET /articles
   def index
-    @articles = Article.all
+    @articles = Article.order(:id).page(params[:page]).per(params[:per_page])
 
     render json: @articles, include: [:category, :author]
   end

@@ -5,7 +5,7 @@ class Api::V1::UsersController < ApplicationController
 
   # GET /users
   def index
-    @users = User.all
+    @users = User.order(:id).page(params[:page]).per(params[:per_page])
 
     render json: @users, include: [:articles]
   end
